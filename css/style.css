@@ -1,0 +1,64 @@
+body {
+  margin: 50px;
+  display: flex;
+  align-items: center;
+}
+#maps {
+  width: 400px;
+  height: 400px;
+  background: url("../img/cell.png");
+}
+#buy,
+#count {
+  width: 300px;
+  height: 180px;
+}
+span {
+  font-size: 40px;
+}
+.object-buy:hover img {
+  border: 2px solid #000;
+  cursor: pointer;
+}
+hr {
+  width: 300px;
+  height: 2px;
+  margin: 0;
+  margin-bottom: 20px;
+  background: black;
+}
+img {
+  margin-top: 5px;
+  width: 50px;
+  height: 50px;
+}
+.active img {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.object {
+  border: 1px solid #000;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+}
+.object:hover {
+  background: rgba(0, 0, 0, 0.3);
+  border: 2px solid #000;
+}
+
+.is-no-start {
+  background: url(../img/krupa.jpg);
+}
+.sale-object:hover img {
+  border: 2px solid #000;
+  cursor: pointer;
+}
+#regulations:hover {
+  position: fixed;
+  width: 500px;
+  height: 300px;
+  display: block;
+  z-index: 100;
+  content: "cfvfve";
+}
