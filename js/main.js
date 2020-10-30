@@ -12,7 +12,7 @@ let setting_object = [
   {
     object: 0,
     name: "пусто",
-    img: "../img/cell.png",
+    img: "img/cell.png",
     countImg: "",
     count: 0,
     startObject: 1,
@@ -25,9 +25,9 @@ let setting_object = [
   {
     object: 1,
     name: "пшеница",
-    img: "../img/wheat.png",
-    countImg: "../img/millet.png",
-    isDoneImg: "../img/millet.png",
+    img: "img/wheat.png",
+    countImg: "img/millet.png",
+    isDoneImg: "img/millet.png",
     isDone: false,
     count: 0,
     startObject: null,
@@ -42,9 +42,9 @@ let setting_object = [
   {
     object: 2,
     name: "курица",
-    img: "../img/chicken.png",
-    countImg: "../img/egg.png",
-    isDoneImg: "../img/egg.png",
+    img: "img/chicken.png",
+    countImg: "img/egg.png",
+    isDoneImg: "img/egg.png",
     isDone: false,
     count: 0,
     startObject: 1,
@@ -61,9 +61,9 @@ let setting_object = [
   {
     object: 3,
     name: "корова",
-    img: "../img/cow.png",
-    countImg: "../img/milk.png",
-    isDoneImg: "../img/milk.png",
+    img: "img/cow.png",
+    countImg: "img/milk.png",
+    isDoneImg: "img/milk.png",
     isDone: false,
     count: 0,
     startObject: 1,
@@ -94,7 +94,7 @@ for (let i = 1; i < setting_object.length; i++) {
 $("#count").append(
   `<div class="col-3 p-0">
     <div class="money">
-     <img src="../img/money.png"><br>
+     <img src="img/money.png"><br>
      <span>${allMoney}</span>
     </div>
   </div>`
