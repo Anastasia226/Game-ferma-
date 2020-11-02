@@ -6,7 +6,7 @@ let selected_object_sale = null;
 let time = 1000;
 let fps = time / 1000;
 let allMoney = 120;
-
+let timingCount = [];
 let setting_object = [
   //object1 - пусто
   {
@@ -53,9 +53,8 @@ let setting_object = [
     countTime: 0,
     isStart: false,
     timing: 3,
-    timingCount: 3,
     money: 15,
-    cost: 3,
+    cost: 2,
   },
   //object1 - корова
   {
@@ -72,7 +71,6 @@ let setting_object = [
     countTime: 0,
     isStart: false,
     timing: 1,
-    timingCount: 1,
     money: 25,
     cost: 7,
   },
@@ -102,9 +100,10 @@ $("#count").append(
 //вывод на экран поле 6х6
 for (let i = 0; i < size_x; i++) {
   let map_x = [];
+  let count_x = [];
   for (let j = 0; j < size_y; j++) {
     const clone = JSON.parse(JSON.stringify(setting_object[0]));
-
+    count_x.push(null);
     map_x.push(clone);
     $("#maps").append(`
     <div class="col-2 p-0 object" id="object_${i}_${j}" data-i="${i}" data-j="${j}" data-object="0">
@@ -113,6 +112,7 @@ for (let i = 0; i < size_x; i++) {
     `);
   }
   maps.push(map_x);
+  timingCount.push(count_x);
 }
 //вывод на экран объектов(пшеница, курица, корова)
 for (let i = 1; i < setting_object.length; i++) {
@@ -157,14 +157,19 @@ $(document).on("click", ".object", function () {
           maps[$this.data("i")][$this.data("j")] = setting;
           $this.html(`<img src="${setting_object[selected_object_buy].img}">`);
           $this.data("object", setting.object);
-          selected_object_buy = null;
+
           $(".object-buy").removeClass("active");
           if (setting.startObject != null) {
             $this.addClass("is-no-start");
+            timingCount[$this.data("i")][$this.data("j")] =
+              setting_object[selected_object_buy].timing;
+            console.log(timingCount);
+            console.log(maps);
           }
         } else {
           alert("Недостаточно денег!");
         }
+        selected_object_buy = null;
       }
       break;
     case 1:
@@ -203,7 +208,6 @@ setInterval(function () {
     }
   }
 }, time);
-
 //сбор готовых продуктов
 $(document).on("click", ".object", function () {
   let $this = $(this);
@@ -219,15 +223,16 @@ $(document).on("click", ".object", function () {
       JSON.stringify(setting_object[$this.data("object")])
     );
     maps[$this.data("i")][$this.data("j")] = setting;
-    setting_object[setting.object].timingCount -= 1;
+    timingCount[$this.data("i")][$this.data("j")] -= 1;
+    console.log(timingCount);
     if (object.startObject != null) {
-      if (setting_object[setting.object].timingCount == 0) {
+      if (timingCount[$this.data("i")][$this.data("j")] == 0) {
         $this.addClass("is-no-start");
       } else {
         setting.isStart = true;
       }
     }
-    $this.html(`<img src="${setting_object[object.object].img}">`);
+    $this.html(`<img src="${object.img}">`);
     object.isDone = false;
   }
 });
@@ -240,8 +245,7 @@ $(document).on("click", ".is-no-start", function () {
   if (start_setting.count >= 1) {
     //если есть пшено
     $this.removeClass("is-no-start");
-    setting_object[object.object].timingCount =
-      setting_object[object.object].timing;
+    timingCount[$this.data("i")][$this.data("j")] = object.timing;
     start_setting.count -= 1; //вычитаем единицу пшена, после кормления
     $(`#count [data-object="${object.startObject}"] span`).text(
       start_setting.count
@@ -263,12 +267,12 @@ $(".sale-object").click(function () {
     $this.addClass("active");
   }
 });
+//Продать выбранный продукт
 $(document).on("click", "button#sale", function () {
   if (selected_object_sale != null) {
     let sum = $(
       `#count [data-object="${setting_object[selected_object_sale].object}"] span`
     ).text();
-    console.log(sum);
     if (sum > 0) {
       allMoney += setting_object[selected_object_sale].cost * sum;
       $(`#count [class="money"] span`).text(allMoney);
